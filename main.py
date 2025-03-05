@@ -14,9 +14,10 @@ def JSON_RESPONSE(message=None, details=None, action=None, error=False, online_m
     if error == True:
         status_code = 400
     else:
-        status_code = error
-
-    response = {"status": "error", "error": {"message": message, "details": details, "action": action}, "online_mode": online_mode}
+        # Fix the logic - default to 200 when not an error
+        status_code = 200
+    
+    response = {"status": "error" if error else "success", "error": {"message": message, "details": details, "action": action}, "online_mode": online_mode}
     return jsonify(response), status_code
 
 
